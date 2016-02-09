@@ -15,7 +15,7 @@ let GALLERY_ID = "66911286-72157647263150569"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
-let QUERY_STRING = "mark rothko"
+let QUERY_STRING = "michaenienaber"
 
 
 class ViewController: UIViewController {
@@ -129,6 +129,7 @@ class ViewController: UIViewController {
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue(), {
+                    self.image.image = UIImage(named: "dark")
                     self.imageNameLabel.text = "Got nothing for ya, try a different search!"
                 })
             }
