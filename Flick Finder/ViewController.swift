@@ -15,7 +15,7 @@ let GALLERY_ID = "66911286-72157647263150569"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
-let QUERY_STRING = "hydraglyph"
+let QUERY_STRING = "mark rothko"
 
 
 class ViewController: UIViewController {
@@ -37,7 +37,6 @@ class ViewController: UIViewController {
     }
 
     @IBAction func textSearch(sender: AnyObject) {
-        print("yup")
         
         let methodArguments = [
         "method": METHOD_NAME,
@@ -103,28 +102,35 @@ class ViewController: UIViewController {
                     return
             }
             
-            /* 7 - Generate a random number, then select a random photo */
-            let randomPhotoIndex = Int(arc4random_uniform(UInt32(photoArray.count)))
-            let photoDictionary = photoArray[randomPhotoIndex] as [String: AnyObject]
-            let photoTitle = photoDictionary["title"] as? String /* non-fatal */
-            
-            /* GUARD: Does our photo have a key for 'url_m'? */
-            guard let imageUrlString = photoDictionary["url_m"] as? String else {
-                print("Cannot find key 'url_m' in \(photoDictionary)")
-                return
-            }
-            
-            /* 8 - If an image exists at the url, set the image and title */
-            let imageURL = NSURL(string: imageUrlString)
-            if let imageData = NSData(contentsOfURL: imageURL!) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.image.image = UIImage(data: imageData)
-                    self.imageNameLabel.text = imageUrlString
-                    print(imageUrlString)
-                    
-                })
+            if photosDictionary.count > 0 {
+                
+                /* 7 - Generate a random number, then select a random photo */
+                let randomPhotoIndex = Int(arc4random_uniform(UInt32(photoArray.count)))
+                let photoDictionary = photoArray[randomPhotoIndex] as [String: AnyObject]
+                let photoTitle = photoDictionary["title"] as? String /* non-fatal */
+                
+                /* GUARD: Does our photo have a key for 'url_m'? */
+                guard let imageUrlString = photoDictionary["url_m"] as? String else {
+                    print("Cannot find key 'url_m' in \(photoDictionary)")
+                    return
+                }
+                
+                /* 8 - If an image exists at the url, set the image and title */
+                let imageURL = NSURL(string: imageUrlString)
+                if let imageData = NSData(contentsOfURL: imageURL!) {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.image.image = UIImage(data: imageData)
+                        self.imageNameLabel.text = photoTitle
+                        print(imageUrlString)
+                        
+                    })
+                } else {
+                    print("Image does not exist at \(imageURL)")
+                }
             } else {
-                print("Image does not exist at \(imageURL)")
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.imageNameLabel.text = "Got nothing for ya, try a different search!"
+                })
             }
         }
         
