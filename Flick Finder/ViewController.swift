@@ -92,6 +92,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             print("fine")
         } else {
             view.frame.origin.y -= getKeyboardHeight(notification) - 110
+            print(view.frame.origin.y)
         }
         //print("Shift the view's frame up so that controls are shown")
     }
@@ -226,7 +227,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 print("No photos here!")
             }
         }
+        handleSingleTap(tap!)
         task.resume()
+        
     }
     
     @IBAction func latLongSearch(sender: AnyObject) {
