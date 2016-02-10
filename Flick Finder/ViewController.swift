@@ -15,10 +15,10 @@ let GALLERY_ID = "66911286-72157647263150569"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
-let QUERY_STRING = "nom"
+let QUERY_STRING = "white"
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var imageNameLabel: UILabel!
     @IBOutlet weak var image: UIImageView!
@@ -26,14 +26,89 @@ class ViewController: UIViewController {
     @IBOutlet weak var latTextSearch: UITextField!
     @IBOutlet weak var longTextSearch: UITextField!
     
+    var tap: UITapGestureRecognizer? = nil
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.searchBoxText.delegate = self
+        self.latTextSearch.delegate = self
+        self.longTextSearch.delegate = self
+        tap = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tap?.numberOfTapsRequired = 1
+        
+        //print("Initialize the tapRecognizer in viewDidLoad")
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.view.addGestureRecognizer(tap!)
+        subscribeToKeyboardNotifications()
+        //print("Add the tapRecognizer and subscribe to keyboard notifications in viewWillAppear")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.view.removeGestureRecognizer(tap!)
+        unsubscribeToKeyboardNotifications()
+        //print("Remove the tapRecognizer and unsubscribe from keyboard notifications in viewWillDisappear")
+    }
+    
+    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        
+        self.view.endEditing(true)
+        //print("End editing here")
+    }
+    
+    func addKeyboardDismissRecognizer() {
+        
+        self.view.addGestureRecognizer(tap!)
+        //print("Add the recognizer to dismiss the keyboard")
+    }
+    
+    func removeKeyboardDismissRecognizer() {
+        
+        self.view.removeGestureRecognizer(tap!)
+        //print("Remove the recognizer to dismiss the keyboard")
+    }
+    
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func subscribeToKeyboardNotifications() {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        //print("Subscribe to the KeyboardWillShow and KeyboardWillHide notifications")
+    }
+    
+    func unsubscribeToKeyboardNotifications() {
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        //print("Unsubscribe to the KeyboardWillShow and KeyboardWillHide notifications")
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        view.frame.origin.y -= getKeyboardHeight(notification) - 110
+        //print("Shift the view's frame up so that controls are shown")
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
+        view.frame.origin.y = 0
+        //print("Shift the view's frame down so that the view is back to its original placement")
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.CGRectValue().height
+        //print("Get and return the keyboard's height from the notification")
+        //return 0.0
     }
 
     @IBAction func textSearch(sender: AnyObject) {
