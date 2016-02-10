@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -59,16 +58,6 @@
                                         <include reference="eD1-YM-KGN"/>
                                     </mask>
                                 </variation>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="LATITUDE" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Ll-JN-0UR">
-                                <rect key="frame" x="98" y="458" width="97" height="30"/>
-                                <color key="backgroundColor" red="0.09118778258562088" green="0.43310326337814331" blue="0.57478529214859009" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="w9r-fp-93A"/>
-                                </constraints>
-                                <color key="textColor" red="0.97656363248825073" green="0.58671993017196655" blue="0.017128482460975647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="LONGDITUDE" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hnT-cm-FX5">
                                 <rect key="frame" x="258" y="458" width="111" height="30"/>
@@ -147,7 +136,7 @@
                                     <rect key="frame" x="291" y="413" width="57" height="30"/>
                                 </variation>
                                 <connections>
-                                    <action selector="latLongSearch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="njb-uV-1FE"/>
+                                    <action selector="latLongSearch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="20t-6H-c7B"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlW-MU-rKP">
@@ -163,6 +152,16 @@
                                     <action selector="textSearch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Pep-Dc-mFu"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="LATITUDE" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Ll-JN-0UR">
+                                <rect key="frame" x="98" y="458" width="97" height="30"/>
+                                <color key="backgroundColor" red="0.09118778258562088" green="0.43310326337814331" blue="0.57478529214859009" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="w9r-fp-93A"/>
+                                </constraints>
+                                <color key="textColor" red="0.97656363248825073" green="0.58671993017196655" blue="0.017128482460975647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.09118778258562088" green="0.43310326337814331" blue="0.57478529214859009" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -213,6 +212,11 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="2mX-Rm-cHM"/>
+                                <exclude reference="zfc-kE-3VO"/>
+                                <exclude reference="Dxy-zL-c9R"/>
+                                <exclude reference="LRX-ce-X0o"/>
+                                <exclude reference="kPY-JE-sc8"/>
                                 <exclude reference="AZc-Cx-5nw"/>
                                 <exclude reference="IaY-KO-MME"/>
                                 <exclude reference="K1t-w1-aLG"/>
@@ -222,15 +226,12 @@
                                 <exclude reference="TiL-ca-byq"/>
                                 <exclude reference="m9v-30-UUd"/>
                                 <exclude reference="wn2-za-3wN"/>
+                                <exclude reference="2Ng-7V-iSx"/>
                                 <exclude reference="0cG-oS-ebZ"/>
                                 <exclude reference="2qc-8d-XHB"/>
                                 <exclude reference="Kds-At-fUw"/>
                                 <exclude reference="b0l-A3-8EL"/>
                                 <exclude reference="lg5-ba-FlY"/>
-                                <exclude reference="2Ng-7V-iSx"/>
-                                <exclude reference="Dxy-zL-c9R"/>
-                                <exclude reference="LRX-ce-X0o"/>
-                                <exclude reference="kPY-JE-sc8"/>
                                 <exclude reference="Qt2-2c-tSd"/>
                                 <exclude reference="n7c-Ta-Az1"/>
                                 <exclude reference="6Y9-0x-GMG"/>
@@ -238,13 +239,16 @@
                                 <exclude reference="PSB-Ev-LW7"/>
                                 <exclude reference="gcR-D4-Dlq"/>
                                 <exclude reference="paE-oe-bCI"/>
-                                <exclude reference="2mX-Rm-cHM"/>
-                                <exclude reference="zfc-kE-3VO"/>
                                 <exclude reference="U5s-hq-Qc1"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="constraints">
+                                <include reference="2mX-Rm-cHM"/>
+                                <include reference="zfc-kE-3VO"/>
+                                <include reference="Dxy-zL-c9R"/>
+                                <include reference="LRX-ce-X0o"/>
+                                <include reference="kPY-JE-sc8"/>
                                 <include reference="AZc-Cx-5nw"/>
                                 <include reference="IaY-KO-MME"/>
                                 <include reference="K1t-w1-aLG"/>
@@ -254,15 +258,12 @@
                                 <include reference="TiL-ca-byq"/>
                                 <include reference="m9v-30-UUd"/>
                                 <include reference="wn2-za-3wN"/>
+                                <include reference="2Ng-7V-iSx"/>
                                 <include reference="0cG-oS-ebZ"/>
                                 <include reference="2qc-8d-XHB"/>
                                 <include reference="Kds-At-fUw"/>
                                 <include reference="b0l-A3-8EL"/>
                                 <include reference="lg5-ba-FlY"/>
-                                <include reference="2Ng-7V-iSx"/>
-                                <include reference="Dxy-zL-c9R"/>
-                                <include reference="LRX-ce-X0o"/>
-                                <include reference="kPY-JE-sc8"/>
                                 <include reference="Qt2-2c-tSd"/>
                                 <include reference="n7c-Ta-Az1"/>
                                 <include reference="6Y9-0x-GMG"/>
@@ -270,8 +271,6 @@
                                 <include reference="PSB-Ev-LW7"/>
                                 <include reference="gcR-D4-Dlq"/>
                                 <include reference="paE-oe-bCI"/>
-                                <include reference="2mX-Rm-cHM"/>
-                                <include reference="zfc-kE-3VO"/>
                                 <include reference="U5s-hq-Qc1"/>
                             </mask>
                         </variation>

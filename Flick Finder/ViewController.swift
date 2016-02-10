@@ -15,7 +15,7 @@ let GALLERY_ID = "66911286-72157647263150569"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
-let QUERY_STRING = "michaenienaber"
+let QUERY_STRING = "nom"
 
 
 class ViewController: UIViewController {
@@ -95,18 +95,34 @@ class ViewController: UIViewController {
                 return
             }
             
-            /* GUARD: Are the "photos" and "photo" keys in our result? */
-            guard let photosDictionary = parsedResult["photos"] as? NSDictionary,
-                photoArray = photosDictionary["photo"] as? [[String: AnyObject]] else {
-                    print("Cannot find keys 'photos' and 'photo' in \(parsedResult)")
-                    return
+            /* 1 - Get the photos dictionary */
+            /* GUARD: Is "photos" key in our result? */
+            guard let photosDictionary = parsedResult["photos"] as? NSDictionary else {
+                print("Cannot find keys 'photos' in \(parsedResult)")
+                return
             }
             
-            if photosDictionary.count > 0 {
+            /* 2 - Determine the total number of photos */
+            /* GUARD: Is the "total" key in photosDictionary? */
+            guard let totalPhotos = (photosDictionary["total"] as? NSString)?.integerValue else {
+                print("Cannot find key 'total' in \(photosDictionary)")
+                return
+            }
+            
+            /* 3 - If photos are returned, let's grab one! */
+            if totalPhotos > 0 {
                 
-                /* 7 - Generate a random number, then select a random photo */
-                let randomPhotoIndex = Int(arc4random_uniform(UInt32(photoArray.count)))
-                let photoDictionary = photoArray[randomPhotoIndex] as [String: AnyObject]
+                /* GUARD: Is the "photo" key in photosDictionary? */
+                guard let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] else {
+                    print("Cannot find key 'photo' in \(photosDictionary)")
+                    return
+                }
+                
+                /* 4 - Get a random index, and pick a random photo's dictionary */
+                let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
+                let photoDictionary = photosArray[randomPhotoIndex] as [String: AnyObject]
+                
+                /* 5 - Prepare the UI updates */
                 let photoTitle = photoDictionary["title"] as? String /* non-fatal */
                 
                 /* GUARD: Does our photo have a key for 'url_m'? */
@@ -122,24 +138,24 @@ class ViewController: UIViewController {
                         self.image.image = UIImage(data: imageData)
                         self.imageNameLabel.text = photoTitle
                         print(imageUrlString)
-                        
                     })
                 } else {
-                    print("Image does not exist at \(imageURL)")
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.image.image = UIImage(named: "dark")
+                        self.imageNameLabel.text = "Got nothing for ya, try a different search!"
+                    })
                 }
             } else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.image.image = UIImage(named: "dark")
-                    self.imageNameLabel.text = "Got nothing for ya, try a different search!"
-                })
+                print("No photos here!")
             }
         }
-        
         task.resume()
     }
-
+    
     @IBAction func latLongSearch(sender: AnyObject) {
     }
+
+
     
     func escapedParameters(parameters: [String : AnyObject]) -> String {
         
