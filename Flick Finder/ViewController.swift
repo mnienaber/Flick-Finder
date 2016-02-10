@@ -28,7 +28,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     var tap: UITapGestureRecognizer? = nil
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +36,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.longTextSearch.delegate = self
         tap = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tap?.numberOfTapsRequired = 1
-        
         //print("Initialize the tapRecognizer in viewDidLoad")
     }
     
@@ -75,8 +73,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //print("Remove the recognizer to dismiss the keyboard")
     }
     
-
-    
     func subscribeToKeyboardNotifications() {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
@@ -92,7 +88,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func keyboardWillShow(notification: NSNotification) {
         
-        view.frame.origin.y -= getKeyboardHeight(notification) - 110
+        if view.frame.origin.y > 0 {
+            print("fine")
+        } else {
+            view.frame.origin.y -= getKeyboardHeight(notification) - 110
+        }
         //print("Shift the view's frame up so that controls are shown")
     }
     
@@ -116,10 +116,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let methodArguments = [
         "method": METHOD_NAME,
         "api_key": API_KEY,
-        "text": QUERY_STRING,
+        "text": self.searchBoxText.text!,
         "extras": EXTRAS,
         "format": DATA_FORMAT,
         "nojsoncallback": NO_JSON_CALLBACK]
+        
+        print(searchBoxText)
         
         /* 3 - Initialize session and url */
         let session = NSURLSession.sharedSession()
