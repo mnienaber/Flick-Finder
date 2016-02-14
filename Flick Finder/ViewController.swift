@@ -15,8 +15,6 @@ let GALLERY_ID = "66911286-72157647263150569"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
-let QUERY_STRING = "white"
-
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
@@ -140,7 +138,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK]
         
-        print("search text is \(searchBoxText)")
+        print("search text is \(searchBoxText.text!)")
         print("latlong text is \(self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0")")
         
         let session = NSURLSession.sharedSession()
