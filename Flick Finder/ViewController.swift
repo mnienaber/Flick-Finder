@@ -111,18 +111,40 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //print("Get and return the keyboard's height from the notification")
         //return 0.0
     }
+    
+    func escapedParameters(parameters: [String : AnyObject]) -> String {
+        
+        var urlVars = [String]()
+        
+        for (key, value) in parameters {
+            
+            /* Make sure that it is a string value */
+            let stringValue = "\(value)"
+            
+            /* Escape it */
+            let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            
+            /* Append it */
+            urlVars += [key + "=" + "\(escapedValue!)"]
+            
+        }
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
+    }
 
-    @IBAction func textSearch(sender: AnyObject) {
+    
+    func searchQuery() {
         
         let methodArguments = [
-        "method": METHOD_NAME,
-        "api_key": API_KEY,
-        "text": self.searchBoxText.text!,
-        "extras": EXTRAS,
-        "format": DATA_FORMAT,
-        "nojsoncallback": NO_JSON_CALLBACK]
+            "method": METHOD_NAME,
+            "api_key": API_KEY,
+            "text": self.searchBoxText.text!,
+            "bbox": self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0",
+            "extras": EXTRAS,
+            "format": DATA_FORMAT,
+            "nojsoncallback": NO_JSON_CALLBACK]
         
-        print(searchBoxText)
+        print("search text is \(searchBoxText)")
+        print("latlong text is \(self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0")")
         
         /* 3 - Initialize session and url */
         let session = NSURLSession.sharedSession()
@@ -229,31 +251,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         handleSingleTap(tap!)
         task.resume()
-        
+    }
+
+    @IBAction func textSearch(sender: AnyObject) {
+        searchQuery()
     }
     
     @IBAction func latLongSearch(sender: AnyObject) {
+        
+        searchQuery()
     }
-
-
     
-    func escapedParameters(parameters: [String : AnyObject]) -> String {
-        
-        var urlVars = [String]()
-        
-        for (key, value) in parameters {
-            
-            /* Make sure that it is a string value */
-            let stringValue = "\(value)"
-            
-            /* Escape it */
-            let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-            
-            /* Append it */
-            urlVars += [key + "=" + "\(escapedValue!)"]
-            
-        }
-        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
-    }
 }
 
