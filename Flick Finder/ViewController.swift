@@ -14,6 +14,7 @@ let API_KEY = "a2d1aaeead83f40edc51928ef2caf6a9"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
+let PER_PAGE = "500"
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
@@ -166,7 +167,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             "bbox": buildBbox(),
             "extras": EXTRAS,
             "format": DATA_FORMAT,
+            //"per_page": PER_PAGE,
             "nojsoncallback": NO_JSON_CALLBACK]
+        
         
         print("search text is \(searchBoxText.text!)")
         print("latlong text is \(self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0")")
