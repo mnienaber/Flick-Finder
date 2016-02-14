@@ -11,7 +11,6 @@ import UIKit
 let BASE_URL = "https://api.flickr.com/services/rest/"
 let METHOD_NAME = "flickr.photos.search"
 let API_KEY = "a2d1aaeead83f40edc51928ef2caf6a9"
-let GALLERY_ID = "72157662201152639"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
@@ -28,6 +27,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var latLongValue: String?
     var newLatString: String?
     var newLongString: String?
+    var newLatBoxPlusString: String?
+    var newLongBoxPlusString: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,18 +133,23 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func buildBbox() -> String {
         
-        let floatLatString:Float = (self.latTextSearch.text! as NSString).floatValue
-        let floatLongString:Float = (self.longTextSearch.text! as NSString).floatValue
-        
+        let floatLatString:Float = (self.latTextSearch.text! as NSString).floatValue - 0.5
+        let floatLongString:Float = (self.longTextSearch.text! as NSString).floatValue - 0.5
+        let floatLatBoxPlusString:Float = (self.latTextSearch.text! as NSString).floatValue + 0.5
+        let floatLongBoxPlusString:Float = (self.longTextSearch.text! as NSString).floatValue + 0.5
+
         if searchBoxText.text!.isEmpty == false {
             
             latLongValue = ""
             return latLongValue!
+            
         } else if floatLatString > -91 && floatLatString < 91 && floatLongString > -181 && floatLongString < 181 {
             
             newLatString = floatLatString.description
             newLongString = floatLongString.description
-            latLongValue = String("\(newLatString!)" + ",0.0," + "\(newLongString!)" + ",0.0")
+            newLatBoxPlusString = floatLatBoxPlusString.description
+            newLongBoxPlusString = floatLongBoxPlusString.description
+            latLongValue = newLongString!  + "," + newLatString! + "," + newLongBoxPlusString! + "," + newLatBoxPlusString!
             return latLongValue!
         } else {
             latLongValue = ""
