@@ -36,7 +36,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.longTextSearch.delegate = self
         tap = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tap?.numberOfTapsRequired = 1
-        //print("Initialize the tapRecognizer in viewDidLoad")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -126,12 +125,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             /* Append it */
             urlVars += [key + "=" + "\(escapedValue!)"]
-            
         }
         return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
 
-    
     func searchQuery() {
         
         let methodArguments = [
@@ -146,7 +143,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         print("search text is \(searchBoxText)")
         print("latlong text is \(self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0")")
         
-        /* 3 - Initialize session and url */
         let session = NSURLSession.sharedSession()
         let urlString = BASE_URL + escapedParameters(methodArguments)
         let url = NSURL(string: urlString)!
@@ -254,6 +250,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func textSearch(sender: AnyObject) {
+        
         searchQuery()
     }
     
