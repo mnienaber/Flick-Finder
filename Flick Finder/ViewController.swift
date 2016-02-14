@@ -11,7 +11,7 @@ import UIKit
 let BASE_URL = "https://api.flickr.com/services/rest/"
 let METHOD_NAME = "flickr.photos.search"
 let API_KEY = "a2d1aaeead83f40edc51928ef2caf6a9"
-let GALLERY_ID = "66911286-72157647263150569"
+let GALLERY_ID = "72157662201152639"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var longTextSearch: UITextField!
     
     var tap: UITapGestureRecognizer? = nil
+    var latLongValue: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,6 +127,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
+    
+    func buildBbox() -> String? {
+        
+        if self.latTextSearch.text!.isEmpty == false {
+            
+            let latLongValue = String(self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0")
+            return latLongValue
+        } else {
+            latLongValue = String("")
+            return latLongValue
+        }
+    }
 
     func searchQuery() {
         
@@ -133,18 +146,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
             "method": METHOD_NAME,
             "api_key": API_KEY,
             "text": self.searchBoxText.text!,
-            "bbox": self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0",
+            "bbox": buildBbox()!,
             "extras": EXTRAS,
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK]
         
         print("search text is \(searchBoxText.text!)")
         print("latlong text is \(self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0")")
-        
+    
         let session = NSURLSession.sharedSession()
         let urlString = BASE_URL + escapedParameters(methodArguments)
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
+        print(urlString)
         
         /* 5 - Create NSURLSessionDataTask and completion handler */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
