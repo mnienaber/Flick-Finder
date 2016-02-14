@@ -26,6 +26,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     var tap: UITapGestureRecognizer? = nil
     var latLongValue: String?
+    var newLatString: String?
+    var newLongString: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,15 +130,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
-    func buildBbox() -> String? {
+    func buildBbox() -> String {
         
-        if self.latTextSearch.text!.isEmpty == false {
+        let floatLatString:Float = (self.latTextSearch.text! as NSString).floatValue
+        let floatLongString:Float = (self.longTextSearch.text! as NSString).floatValue
+        
+        if searchBoxText.text!.isEmpty == false {
             
-            let latLongValue = String(self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0")
-            return latLongValue
+            latLongValue = ""
+            return latLongValue!
+        } else if floatLatString > -91 && floatLatString < 91 && floatLongString > -181 && floatLongString < 181 {
+            
+            newLatString = floatLatString.description
+            newLongString = floatLongString.description
+            latLongValue = String("\(newLatString!)" + ",0.0," + "\(newLongString!)" + ",0.0")
+            return latLongValue!
         } else {
-            latLongValue = String("")
-            return latLongValue
+            latLongValue = ""
+            return latLongValue!
         }
     }
 
@@ -146,7 +157,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             "method": METHOD_NAME,
             "api_key": API_KEY,
             "text": self.searchBoxText.text!,
-            "bbox": buildBbox()!,
+            "bbox": buildBbox(),
             "extras": EXTRAS,
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK]
