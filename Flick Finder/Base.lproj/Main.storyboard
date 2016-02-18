@@ -64,7 +64,7 @@
                                 <color key="backgroundColor" red="0.09118778258562088" green="0.43310326337814331" blue="0.57478529214859009" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.97656363248825073" green="0.58671993017196655" blue="0.017128482460975647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a search term" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="IDe-m5-sUc">
                                 <rect key="frame" x="73" y="368" width="313" height="30"/>
@@ -75,7 +75,7 @@
                                     </constraint>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="mpl-1x-hRa"/>
@@ -160,7 +160,7 @@
                                 </constraints>
                                 <color key="textColor" red="0.97656363248825073" green="0.58671993017196655" blue="0.017128482460975647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.09118778258562088" green="0.43310326337814331" blue="0.57478529214859009" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
