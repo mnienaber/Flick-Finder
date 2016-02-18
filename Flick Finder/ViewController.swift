@@ -39,6 +39,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.longTextSearch.delegate = self
         tap = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tap?.numberOfTapsRequired = 1
+        self.imageNameLabel.text = "Enter a search term or lat-long"
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -159,7 +160,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let urlString = BASE_URL + escapedParameters(methodArguments)
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
-        print(urlString)
+        print("getting a random page")
         
         /* 5 - Create NSURLSessionDataTask and completion handler */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -235,7 +236,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let urlString = BASE_URL + escapedParameters(methodArguments)
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
-        print(urlString)
+        print("Searching within the random page")
         
         /* 5 - Create NSURLSessionDataTask and completion handler */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -358,7 +359,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK
         ]
-        getImageBySearchQuery(methodArguments)
+        
+        if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == true && longTextSearch.text!.isEmpty == true {
+            self.imageNameLabel.text = "Where's that search query?"
+        } else if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == true && longTextSearch.text!.isEmpty == false {
+            self.imageNameLabel.text = "You're hitting the wrong button"
+        } else if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == false && longTextSearch.text!.isEmpty == true {
+            self.imageNameLabel.text = "You're hitting the wrong button"
+        } else if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == false && longTextSearch.text!.isEmpty == false {
+            self.imageNameLabel.text = "You're hitting the wrong button"
+        } else {
+          getImageBySearchQuery(methodArguments)
+        }
     }
     
     @IBAction func latLongSearch(sender: AnyObject) {
@@ -374,7 +386,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK
         ]
-        getImageBySearchQuery(methodArguments)
+        if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == true && longTextSearch.text!.isEmpty == true {
+            self.imageNameLabel.text = "Where's that search query?"
+        } else if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == true && longTextSearch.text!.isEmpty == false {
+            self.imageNameLabel.text = "You're missing the Lat!"
+        } else if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == false && longTextSearch.text!.isEmpty == true {
+            self.imageNameLabel.text = "You're missing the Long!"
+        } else if searchBoxText.text!.isEmpty == false && latTextSearch.text!.isEmpty == true && longTextSearch.text!.isEmpty == true {
+            self.imageNameLabel.text = "You're hitting the wrong button"
+        } else {
+            getImageBySearchQuery(methodArguments)
+        }
     }
 }
 
