@@ -137,24 +137,35 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             latLongValue = ""
             return latLongValue!
-        } else if floatLatString > -91 && floatLatString < 91 && floatLongString > -181 && floatLongString < 181 {
+        } else if (floatLatString > -91 && floatLatString < 91) && (floatLongString > -181 && floatLongString < 181) {
             
             newLatString = floatLatString.description
             newLongString = floatLongString.description
             newLatBoxPlusString = floatLatBoxPlusString.description
             newLongBoxPlusString = floatLongBoxPlusString.description
             latLongValue = newLongString!  + "," + newLatString! + "," + newLongBoxPlusString! + "," + newLatBoxPlusString!
+            print(latLongValue)
             return latLongValue!
         } else {
             latLongValue = ""
+            imageNameLabel.text! = "LatLong out of range!"
             return latLongValue!
+        }
+    }
+    
+    func toRunOrNotToRun() -> Bool {
+    
+        if (latLongValue == "") {
+            return false
+        } else {
+            print("\(latLongValue) from withing toRun")
+            return true
         }
     }
 
     func getImageBySearchQuery(methodArguments: [String: AnyObject]) {
         
         print("search text is \(searchBoxText.text!)")
-        print("latlong text is \(self.latTextSearch.text! + ",0," + self.longTextSearch.text! + ",0")")
     
         let session = NSURLSession.sharedSession()
         let urlString = BASE_URL + escapedParameters(methodArguments)
@@ -342,6 +353,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 })
             }
         }
+        print(urlString)
         handleSingleTap(tap!)
         task.resume()
     }
@@ -386,7 +398,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK
         ]
-        if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == true && longTextSearch.text!.isEmpty == true {
+        
+        if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == true && longTextSearch.text!.isEmpty == true  {
             self.imageNameLabel.text = "Where's that search query?"
         } else if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == true && longTextSearch.text!.isEmpty == false {
             self.imageNameLabel.text = "You're missing the Lat!"
@@ -394,9 +407,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
             self.imageNameLabel.text = "You're missing the Long!"
         } else if searchBoxText.text!.isEmpty == false && latTextSearch.text!.isEmpty == true && longTextSearch.text!.isEmpty == true {
             self.imageNameLabel.text = "You're hitting the wrong button"
-        } else {
+        } else if searchBoxText.text!.isEmpty == true && latTextSearch.text!.isEmpty == false && longTextSearch.text!.isEmpty == false && toRunOrNotToRun() == true {
             getImageBySearchQuery(methodArguments)
+        } else {
+            self.imageNameLabel.text = "Try something else..."
         }
+        
     }
 }
 
